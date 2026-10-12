@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "606713442405",
+    "project_id": "snaa-d2d53",
+    "storage_bucket": "snaa-d2d53.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:606713442405:android:0e388cc489b9b9d11d168c",
+        "android_client_info": {
+          "package_name": "com.example.suna"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgPZCxG-8ZRV1mNjGCQUwtL5-g_SVCt-s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
