@@ -1,4 +1,4 @@
-package com.example.suna
+package com.Guild.Maghamir
 
 import io.flutter.embedding.android.FlutterActivity
 

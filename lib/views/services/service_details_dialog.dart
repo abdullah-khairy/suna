@@ -4,6 +4,7 @@ import '../../models/user_model.dart';
 import '../../core/utils/external_launcher.dart';
 import '../../services/request_service.dart';
 import '../auth/auth_dialog.dart';
+import '../widgets/ads/app_ad_banner.dart';
 
 class ServiceDetailsDialog extends StatefulWidget {
   final ServiceRequestModel request;
@@ -11,13 +12,7 @@ class ServiceDetailsDialog extends StatefulWidget {
   final Function(UserModel) onLoginRequired;
   final VoidCallback onAccepted;
 
-  const ServiceDetailsDialog({
-    super.key,
-    required this.request,
-    required this.currentUser,
-    required this.onLoginRequired,
-    required this.onAccepted,
-  });
+  const ServiceDetailsDialog({super.key, required this.request, required this.currentUser, required this.onLoginRequired, required this.onAccepted});
 
   @override
   State<ServiceDetailsDialog> createState() => _ServiceDetailsDialogState();
@@ -34,13 +29,9 @@ class _ServiceDetailsDialogState extends State<ServiceDetailsDialog> {
     _currentRequest = widget.request;
   }
 
-  bool get _isAssignedToCurrentUser =>
-      widget.currentUser != null &&
-      _currentRequest.assignedProviderId == widget.currentUser!.id;
+  bool get _isAssignedToCurrentUser => widget.currentUser != null && _currentRequest.assignedProviderId == widget.currentUser!.id;
 
-  bool get _isClientOwner =>
-      widget.currentUser != null &&
-      _currentRequest.clientId == widget.currentUser!.id;
+  bool get _isClientOwner => widget.currentUser != null && _currentRequest.clientId == widget.currentUser!.id;
 
   Future<void> _handleAccept() async {
     if (widget.currentUser == null) {
@@ -59,10 +50,7 @@ class _ServiceDetailsDialogState extends State<ServiceDetailsDialog> {
     setState(() => _isAccepting = true);
 
     try {
-      await _requestService.providerAcceptRequest(
-        requestId: _currentRequest.id,
-        provider: widget.currentUser!,
-      );
+      await _requestService.providerAcceptRequest(requestId: _currentRequest.id, provider: widget.currentUser!);
 
       setState(() {
         _currentRequest = _currentRequest.copyWith(
@@ -79,18 +67,11 @@ class _ServiceDetailsDialogState extends State<ServiceDetailsDialog> {
       widget.onAccepted();
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('مبروك! تم قبول الطلب بنجاح وظهرت الآن تفاصيل العميل وموقعه.'),
-            backgroundColor: Colors.green,
-          ),
-        );
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('مبروك! تم قبول الطلب بنجاح وظهرت الآن تفاصيل العميل وموقعه.'), backgroundColor: Colors.green));
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('حدث خطأ أثناء قبول الطلب: $e'), backgroundColor: Colors.red),
-        );
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('حدث خطأ أثناء قبول الطلب: $e'), backgroundColor: Colors.red));
       }
     } finally {
       if (mounted) setState(() => _isAccepting = false);
@@ -116,15 +97,9 @@ class _ServiceDetailsDialogState extends State<ServiceDetailsDialog> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: Text(
-                      _currentRequest.title,
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
+                    child: Text(_currentRequest.title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.pop(context),
-                  ),
+                  IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.pop(context)),
                 ],
               ),
               const Divider(),
@@ -134,11 +109,7 @@ class _ServiceDetailsDialogState extends State<ServiceDetailsDialog> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Chip(
-                    avatar: const Icon(Icons.category, size: 16),
-                    label: Text(_currentRequest.category),
-                    backgroundColor: Colors.blue.shade50,
-                  ),
+                  Chip(avatar: const Icon(Icons.category, size: 16), label: Text(_currentRequest.category), backgroundColor: Colors.blue.shade50),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
@@ -147,12 +118,8 @@ class _ServiceDetailsDialogState extends State<ServiceDetailsDialog> {
                       border: Border.all(color: Colors.green.shade200),
                     ),
                     child: Text(
-                      '$price ريال',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green.shade800,
-                      ),
+                      '$price ${_currentRequest.effectiveCurrency}',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.green.shade800),
                     ),
                   ),
                 ],
@@ -164,14 +131,8 @@ class _ServiceDetailsDialogState extends State<ServiceDetailsDialog> {
               const SizedBox(height: 4),
               Container(
                 padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  _currentRequest.description,
-                  style: const TextStyle(fontSize: 14, height: 1.4),
-                ),
+                decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: BorderRadius.circular(10)),
+                child: Text(_currentRequest.description, style: const TextStyle(fontSize: 14, height: 1.4)),
               ),
               const SizedBox(height: 16),
 
@@ -192,17 +153,13 @@ class _ServiceDetailsDialogState extends State<ServiceDetailsDialog> {
                         children: [
                           const Icon(Icons.check_circle, color: Colors.green, size: 20),
                           const SizedBox(width: 8),
-                          Text(
-                            _isClientOwner ? 'بيانات طلبك' : 'بيانات العميل للتواصل:',
-                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                          ),
+                          Text(_isClientOwner ? 'بيانات طلبك' : 'بيانات العميل للتواصل:', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                         ],
                       ),
                       const SizedBox(height: 8),
                       Text('طالب الخدمة: ${_currentRequest.clientName}'),
                       Text('رقم الهاتف: ${_currentRequest.clientPhone}'),
-                      if (_currentRequest.addressTitle.isNotEmpty)
-                        Text('العنوان: ${_currentRequest.addressTitle}'),
+                      if (_currentRequest.addressTitle.isNotEmpty) Text('العنوان: ${_currentRequest.addressTitle}'),
                       const SizedBox(height: 12),
 
                       Row(
@@ -214,10 +171,7 @@ class _ServiceDetailsDialogState extends State<ServiceDetailsDialog> {
                               },
                               icon: const Icon(Icons.call, size: 18),
                               label: const Text('اتصال مباشر'),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green.shade700,
-                                foregroundColor: Colors.white,
-                              ),
+                              style: ElevatedButton.styleFrom(backgroundColor: Colors.green.shade700, foregroundColor: Colors.white),
                             ),
                           ),
                           const SizedBox(width: 8),
@@ -225,17 +179,11 @@ class _ServiceDetailsDialogState extends State<ServiceDetailsDialog> {
                             Expanded(
                               child: ElevatedButton.icon(
                                 onPressed: () {
-                                  ExternalLauncher.openGoogleMaps(
-                                    latitude: _currentRequest.clientLocation!.latitude,
-                                    longitude: _currentRequest.clientLocation!.longitude,
-                                  );
+                                  ExternalLauncher.openGoogleMaps(latitude: _currentRequest.clientLocation!.latitude, longitude: _currentRequest.clientLocation!.longitude);
                                 },
                                 icon: const Icon(Icons.directions, size: 18),
                                 label: const Text('خرائط جوجل'),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.blue.shade800,
-                                  foregroundColor: Colors.white,
-                                ),
+                                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue.shade800, foregroundColor: Colors.white),
                               ),
                             ),
                         ],
@@ -244,7 +192,7 @@ class _ServiceDetailsDialogState extends State<ServiceDetailsDialog> {
                   ),
                 ),
 
-                // إذا كان هناك صنايعي تم تعيينه وطالب الخدمة يرى بياناته
+                // إذا كان هناك مغامر تم تعيينه وطالب الخدمة يرى بياناته
                 if (_currentRequest.assignedProviderName != null) ...[
                   const SizedBox(height: 14),
                   Container(
@@ -261,17 +209,24 @@ class _ServiceDetailsDialogState extends State<ServiceDetailsDialog> {
                           children: [
                             Icon(Icons.handyman, color: Colors.amber, size: 20),
                             SizedBox(width: 8),
-                            Text(
-                              'الصنايعي الذي قبل تقديم الخدمة:',
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                            ),
+                            Text('المغامر الذي قبل تقديم الخدمة:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                           ],
                         ),
                         const SizedBox(height: 6),
                         Text('الاسم: ${_currentRequest.assignedProviderName}'),
                         Text('المهنة: ${_currentRequest.assignedProviderProfession ?? 'مهني متخصص'}'),
-                        if (_currentRequest.assignedProviderAge != null)
-                          Text('العمر: ${_currentRequest.assignedProviderAge} سنة'),
+                        if (_currentRequest.assignedProviderAge != null) Text('العمر: ${_currentRequest.assignedProviderAge} سنة'),
+                        if (_currentRequest.assignedProviderRating != null)
+                          Row(
+                            children: [
+                              const Icon(Icons.star_rounded, color: Colors.amber, size: 18),
+                              const SizedBox(width: 4),
+                              Text(
+                                'التقييم: ${_currentRequest.assignedProviderRating!.toStringAsFixed(1)} ★',
+                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.black87),
+                              ),
+                            ],
+                          ),
                         Text('الهاتف: ${_currentRequest.assignedProviderPhone}'),
                         const SizedBox(height: 8),
                         ElevatedButton.icon(
@@ -281,11 +236,8 @@ class _ServiceDetailsDialogState extends State<ServiceDetailsDialog> {
                             }
                           },
                           icon: const Icon(Icons.phone, size: 16),
-                          label: const Text('الاتصال بالصنايعي'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.amber.shade900,
-                            foregroundColor: Colors.white,
-                          ),
+                          label: const Text('الاتصال بالمغامر'),
+                          style: ElevatedButton.styleFrom(backgroundColor: Colors.amber.shade900, foregroundColor: Colors.white),
                         ),
                       ],
                     ),
@@ -304,12 +256,7 @@ class _ServiceDetailsDialogState extends State<ServiceDetailsDialog> {
                     children: [
                       Icon(Icons.lock_outline, color: Colors.amber, size: 22),
                       SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          'موقع العميل الدقيق ورقم هاتفه محميان. عند موافقتك على تقديم الخدمة سيتم كشفهما فوراً لتتواصل معه.',
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      ),
+                      Expanded(child: Text('موقع العميل الدقيق ورقم هاتفه محميان. عند موافقتك على تقديم الخدمة سيتم كشفهما فوراً لتتواصل معه.', style: TextStyle(fontSize: 12))),
                     ],
                   ),
                 ),
@@ -323,18 +270,11 @@ class _ServiceDetailsDialogState extends State<ServiceDetailsDialog> {
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
-                  child: _isAccepting
-                      ? const SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
-                        )
-                      : const Text(
-                          'أوافق على تقديم هذه الخدمة',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
+                  child: _isAccepting ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2)) : const Text('أوافق على تقديم هذه الخدمة', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 ),
               ],
+              const SizedBox(height: 14),
+              const AppAdBanner(placement: AdPlacement.detailsBottom),
             ],
           ),
         ),

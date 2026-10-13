@@ -104,7 +104,7 @@ class _AuthDialogState extends State<AuthDialog> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(_isLogin ? 'تسجيل الدخول' : 'انضم كصنايعي / مقدم خدمة', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text(_isLogin ? 'تسجيل الدخول' : 'انضم الي نقابه المغامرين', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                     IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.pop(context)),
                   ],
                 ),
@@ -168,29 +168,22 @@ class _AuthDialogState extends State<AuthDialog> {
                 ),
                 const SizedBox(height: 10),
 
-                TextButton(
-                  onPressed: () => setState(() => _isLogin = !_isLogin),
-                  child: Text(
-                    _isLogin
-                        ? 'ليس لديك حساب؟ أنشئ حساب صنايعي الآن'
-                        : 'لديك حساب بالفعل؟ تسجيل الدخول',
-                  ),
-                ),
-                const Divider(),
-                TextButton.icon(
-                  onPressed: () {
-                    setState(() {
-                      _isLogin = true;
-                      _phoneController.text = '0500000000';
-                      _passwordController.text = 'admin';
-                    });
-                  },
-                  icon: const Icon(Icons.shield, color: Colors.amber, size: 18),
-                  label: const Text(
-                    'تجربة الدخول بحساب الإدارة (0500000000)',
-                    style: TextStyle(fontSize: 12, color: Colors.blueGrey),
-                  ),
-                ),
+                TextButton(onPressed: () => setState(() => _isLogin = !_isLogin), child: Text(_isLogin ? 'انشئ حساب جديد' : 'لديك حساب بالفعل؟ تسجيل الدخول')),
+                // const Divider(),
+                // TextButton.icon(
+                //   onPressed: () {
+                //     setState(() {
+                //       _isLogin = true;
+                //       _phoneController.text = '0500000000';
+                //       _passwordController.text = 'admin';
+                //     });
+                //   },
+                //   icon: const Icon(Icons.shield, color: Colors.amber, size: 18),
+                //   label: const Text(
+                //     'تجربة الدخول بحساب الإدارة (0500000000)',
+                //     style: TextStyle(fontSize: 12, color: Colors.blueGrey),
+                //   ),
+                // ),
               ],
             ),
           ),

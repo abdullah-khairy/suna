@@ -45,6 +45,7 @@ class UserModel {
   final String description;      // نبذة أو وصف
   final GeoPoint? location;      // إحداثيات الموقع
   final double rating;           // متوسط التقييم (1.0 - 5.0)
+  final int ratingsCount;        // عدد التقييمات المستلمة
   final int completedTasksCount; // عدد الخدمات المكتملة
   final double walletBalance;    // رصيد المحفظة الحالي
   final bool isAvailable;        // هل هو متاح لاستقبال طلبات حالياً؟
@@ -62,6 +63,7 @@ class UserModel {
     this.description = '',
     this.location,
     this.rating = 5.0,
+    this.ratingsCount = 1,
     this.completedTasksCount = 0,
     this.walletBalance = 0.0,
     this.isAvailable = true,
@@ -90,6 +92,7 @@ class UserModel {
       description: map['description'] ?? map['discription'] ?? '',
       location: map['location'] is GeoPoint ? map['location'] as GeoPoint : null,
       rating: (map['rating'] is num) ? (map['rating'] as num).toDouble() : 5.0,
+      ratingsCount: (map['ratingsCount'] is num) ? (map['ratingsCount'] as num).toInt() : 1,
       completedTasksCount: (map['completedTasksCount'] is num) ? (map['completedTasksCount'] as num).toInt() : 0,
       walletBalance: (map['walletBalance'] is num) ? (map['walletBalance'] as num).toDouble() : 0.0,
       isAvailable: map['isAvailable'] ?? true,
@@ -113,6 +116,7 @@ class UserModel {
       'discription': description,
       'location': location,
       'rating': rating,
+      'ratingsCount': ratingsCount,
       'completedTasksCount': completedTasksCount,
       'walletBalance': walletBalance,
       'isAvailable': isAvailable,
@@ -132,6 +136,7 @@ class UserModel {
     String? description,
     GeoPoint? location,
     double? rating,
+    int? ratingsCount,
     int? completedTasksCount,
     double? walletBalance,
     bool? isAvailable,
@@ -149,6 +154,7 @@ class UserModel {
       description: description ?? this.description,
       location: location ?? this.location,
       rating: rating ?? this.rating,
+      ratingsCount: ratingsCount ?? this.ratingsCount,
       completedTasksCount: completedTasksCount ?? this.completedTasksCount,
       walletBalance: walletBalance ?? this.walletBalance,
       isAvailable: isAvailable ?? this.isAvailable,

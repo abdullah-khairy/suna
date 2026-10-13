@@ -2,30 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SupplierModel {
   final String id;
-  final String name;             // اسم المحل أو المورد (مثال: البركة للحدايد والبويات)
-  final String ownerName;        // اسم المسؤول / صاحب المحل
-  final String phone;            // رقم الهاتف للتواصل والطلبات
-  final String category;         // القسم (رمل وأسمنت، حدايد وبويات، أدوات صحية، كهرباء...)
-  final String description;      // وصف المنتجات المتوفرة
-  final String addressTitle;     // العنوان المكتوب / المنطقة
-  final GeoPoint? location;      // الإحداثيات لحساب المسافة والملاحة
-  final bool deliveryAvailable;  // هل يوفر خدمة توصيل المون للموقع؟
-  final double rating;           // التقييم
+  final String name; // اسم المحل أو المورد (مثال: البركة للحدايد والبويات)
+  final String ownerName; // اسم المسؤول / صاحب المحل
+  final String phone; // رقم الهاتف للتواصل والطلبات
+  final String category; // القسم (رمل وأسمنت، حدايد وبويات، أدوات صحية، كهرباء...)
+  final String description; // وصف المنتجات المتوفرة
+  final String addressTitle; // العنوان المكتوب / المنطقة
+  final GeoPoint? location; // الإحداثيات لحساب المسافة والملاحة
+  final bool deliveryAvailable; // هل يوفر خدمة توصيل المون للموقع؟
+  final double rating; // التقييم
   final DateTime createdAt;
 
-  const SupplierModel({
-    required this.id,
-    required this.name,
-    this.ownerName = '',
-    required this.phone,
-    required this.category,
-    required this.description,
-    this.addressTitle = '',
-    this.location,
-    this.deliveryAvailable = true,
-    this.rating = 5.0,
-    required this.createdAt,
-  });
+  const SupplierModel({required this.id, required this.name, this.ownerName = '', required this.phone, required this.category, required this.description, this.addressTitle = '', this.location, this.deliveryAvailable = true, this.rating = 5.0, required this.createdAt});
 
   factory SupplierModel.fromFirestore(DocumentSnapshot doc) {
     final data = (doc.data() as Map<String, dynamic>?) ?? {};
@@ -44,40 +32,15 @@ class SupplierModel {
       location: map['location'] is GeoPoint ? map['location'] as GeoPoint : null,
       deliveryAvailable: map['deliveryAvailable'] ?? true,
       rating: (map['rating'] is num) ? (map['rating'] as num).toDouble() : 5.0,
-      createdAt: map['createdAt'] is Timestamp
-          ? (map['createdAt'] as Timestamp).toDate()
-          : DateTime.now(),
+      createdAt: map['createdAt'] is Timestamp ? (map['createdAt'] as Timestamp).toDate() : DateTime.now(),
     );
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'ownerName': ownerName,
-      'phone': phone,
-      'category': category,
-      'description': description,
-      'addressTitle': addressTitle,
-      'location': location,
-      'deliveryAvailable': deliveryAvailable,
-      'rating': rating,
-      'createdAt': Timestamp.fromDate(createdAt),
-    };
+    return {'name': name, 'ownerName': ownerName, 'phone': phone, 'category': category, 'description': description, 'addressTitle': addressTitle, 'location': location, 'deliveryAvailable': deliveryAvailable, 'rating': rating, 'createdAt': Timestamp.fromDate(createdAt)};
   }
 
-  SupplierModel copyWith({
-    String? id,
-    String? name,
-    String? ownerName,
-    String? phone,
-    String? category,
-    String? description,
-    String? addressTitle,
-    GeoPoint? location,
-    bool? deliveryAvailable,
-    double? rating,
-    DateTime? createdAt,
-  }) {
+  SupplierModel copyWith({String? id, String? name, String? ownerName, String? phone, String? category, String? description, String? addressTitle, GeoPoint? location, bool? deliveryAvailable, double? rating, DateTime? createdAt}) {
     return SupplierModel(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -93,13 +56,5 @@ class SupplierModel {
     );
   }
 
-  static const List<String> categories = [
-    'رمل وأسمنت ومواد بناء',
-    'حدايد وبويات',
-    'أدوات صحية وسباكة',
-    'أدوات وكابلات كهربائية',
-    'أخشاب ومستلزمات نجارة',
-    'تكييف وتبريد وقطع غيار',
-    'معدات وعِدد يدوية',
-  ];
+  static const List<String> categories = ['تكنولوجيا وكمبيوتر وجوالات', 'مكتبات وأدوات فن ورسم', 'رمل وأسمنت ومواد بناء', 'ديكورات وفنيات', 'حدايد وبويات', 'أدوات صحية وسباكة', 'أدوات وكابلات كهربائية', 'أخشاب ومستلزمات نجارة', 'تكييف وتبريد وقطع غيار', 'معدات وعِدد يدوية'];
 }

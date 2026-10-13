@@ -69,19 +69,12 @@ class _AddSupplierSheetState extends State<AddSupplierSheet> {
 
       if (mounted) {
         Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('تمت إضافة محلك بنجاح! سيظهر الآن للفنيين والعملاء في المنطقة.'),
-            backgroundColor: Colors.green,
-          ),
-        );
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تمت إضافة محلك بنجاح! سيظهر الآن للفنيين والعملاء في المنطقة.'), backgroundColor: Colors.green));
         widget.onSupplierAdded();
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('حدث خطأ: $e'), backgroundColor: Colors.red),
-        );
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('حدث خطأ: $e'), backgroundColor: Colors.red));
       }
     } finally {
       if (mounted) setState(() => _isSubmitting = false);
@@ -101,12 +94,7 @@ class _AddSupplierSheetState extends State<AddSupplierSheet> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
-        left: 20,
-        right: 20,
-        top: 20,
-      ),
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom, left: 20, right: 20, top: 20),
       child: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -117,14 +105,8 @@ class _AddSupplierSheetState extends State<AddSupplierSheet> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'إضافة محل أو مورد مون',
-                    style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.pop(context),
-                  ),
+                  const Text('إضافة محل أو مورد مون', style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold)),
+                  IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.pop(context)),
                 ],
               ),
               const Divider(),
@@ -133,12 +115,7 @@ class _AddSupplierSheetState extends State<AddSupplierSheet> {
               // اسم المحل
               TextFormField(
                 controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: 'اسم المحل / المورد (مثال: البركة للحدايد والبويات)',
-                  prefixIcon: Icon(Icons.store),
-                  border: OutlineInputBorder(),
-                  isDense: true,
-                ),
+                decoration: const InputDecoration(labelText: 'اسم المحل / المورد (مثال: البركة للحدايد والبويات)', prefixIcon: Icon(Icons.store), border: OutlineInputBorder(), isDense: true),
                 validator: (v) => v == null || v.isEmpty ? 'يرجى كتابة اسم المحل' : null,
               ),
               const SizedBox(height: 12),
@@ -149,12 +126,7 @@ class _AddSupplierSheetState extends State<AddSupplierSheet> {
                   Expanded(
                     child: TextFormField(
                       controller: _ownerController,
-                      decoration: const InputDecoration(
-                        labelText: 'اسم المسؤول',
-                        prefixIcon: Icon(Icons.person),
-                        border: OutlineInputBorder(),
-                        isDense: true,
-                      ),
+                      decoration: const InputDecoration(labelText: 'اسم المسؤول', prefixIcon: Icon(Icons.person), border: OutlineInputBorder(), isDense: true),
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -162,12 +134,7 @@ class _AddSupplierSheetState extends State<AddSupplierSheet> {
                     child: TextFormField(
                       controller: _phoneController,
                       keyboardType: TextInputType.phone,
-                      decoration: const InputDecoration(
-                        labelText: 'رقم الهاتف للطلبات',
-                        prefixIcon: Icon(Icons.phone),
-                        border: OutlineInputBorder(),
-                        isDense: true,
-                      ),
+                      decoration: const InputDecoration(labelText: 'رقم الهاتف للطلبات', prefixIcon: Icon(Icons.phone), border: OutlineInputBorder(), isDense: true),
                       validator: (v) => v == null || v.isEmpty ? 'مطلوب' : null,
                     ),
                   ),
@@ -178,14 +145,12 @@ class _AddSupplierSheetState extends State<AddSupplierSheet> {
               // قسم ونوع المونة
               DropdownButtonFormField<String>(
                 initialValue: _selectedCategory,
-                decoration: const InputDecoration(
-                  labelText: 'قسم ونوع المونة',
-                  prefixIcon: Icon(Icons.category),
-                  border: OutlineInputBorder(),
-                  isDense: true,
-                ),
+                decoration: const InputDecoration(labelText: 'قسم ونوع المونة', prefixIcon: Icon(Icons.category), border: OutlineInputBorder(), isDense: true),
                 items: SupplierModel.categories.map((c) {
-                  return DropdownMenuItem(value: c, child: Text(c, style: const TextStyle(fontSize: 13)));
+                  return DropdownMenuItem(
+                    value: c,
+                    child: Text(c, style: const TextStyle(fontSize: 13)),
+                  );
                 }).toList(),
                 onChanged: (val) {
                   if (val != null) setState(() => _selectedCategory = val);
@@ -196,12 +161,7 @@ class _AddSupplierSheetState extends State<AddSupplierSheet> {
               // العنوان المكتوب
               TextFormField(
                 controller: _addressController,
-                decoration: const InputDecoration(
-                  labelText: 'العنوان / المنطقة بالتفصيل',
-                  prefixIcon: Icon(Icons.location_city),
-                  border: OutlineInputBorder(),
-                  isDense: true,
-                ),
+                decoration: const InputDecoration(labelText: 'العنوان / المنطقة بالتفصيل', prefixIcon: Icon(Icons.location_city), border: OutlineInputBorder(), isDense: true),
                 validator: (v) => v == null || v.isEmpty ? 'يرجى كتابة العنوان' : null,
               ),
               const SizedBox(height: 12),
@@ -210,11 +170,7 @@ class _AddSupplierSheetState extends State<AddSupplierSheet> {
               TextFormField(
                 controller: _descController,
                 maxLines: 2,
-                decoration: const InputDecoration(
-                  labelText: 'المنتجات والمون المتوفرة',
-                  hintText: 'مثال: أسمنت ممتاز، رمل ناعم وخشن، دهانات جوتن، مواسير ومحابس...',
-                  border: OutlineInputBorder(),
-                ),
+                decoration: const InputDecoration(labelText: 'المنتجات والمون المتوفرة', hintText: 'مثال: أسمنت ممتاز، رمل ناعم وخشن، دهانات جوتن، مواسير ومحابس...', border: OutlineInputBorder()),
                 validator: (v) => v == null || v.isEmpty ? 'يرجى توضيح المنتجات' : null,
               ),
               const SizedBox(height: 12),
@@ -223,7 +179,7 @@ class _AddSupplierSheetState extends State<AddSupplierSheet> {
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
                 title: const Text('هل يتوفر توصيل ونقل للموقع؟', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
-                subtitle: const Text('سيظهر للصنايعي والعميل أنك توفر شحن ونقل للموقع', style: TextStyle(fontSize: 11)),
+                subtitle: const Text('سيظهر للمغامر والعميل أنك توفر شحن ونقل للموقع', style: TextStyle(fontSize: 11)),
                 value: _deliveryAvailable,
                 activeThumbColor: Colors.blue.shade900,
                 onChanged: (val) => setState(() => _deliveryAvailable = val),
@@ -233,26 +189,13 @@ class _AddSupplierSheetState extends State<AddSupplierSheet> {
               // الموقع الجغرافي
               Container(
                 padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.blue.shade50,
-                  borderRadius: BorderRadius.circular(10),
-                ),
+                decoration: BoxDecoration(color: Colors.blue.shade50, borderRadius: BorderRadius.circular(10)),
                 child: Row(
                   children: [
                     const Icon(Icons.my_location, color: Colors.blue, size: 20),
                     const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        _shopLocation != null
-                            ? 'تم تحديد موقع المحل على الخريطة ✓'
-                            : (_isLoadingLocation ? 'جاري تحديد إحداثيات المحل...' : 'لم يتم تحديد الإحداثيات'),
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: _isLoadingLocation ? null : _fetchLocation,
-                      child: const Text('تحديث'),
-                    ),
+                    Expanded(child: Text(_shopLocation != null ? 'تم تحديد موقع المحل على الخريطة ✓' : (_isLoadingLocation ? 'جاري تحديد إحداثيات المحل...' : 'لم يتم تحديد الإحداثيات'), style: const TextStyle(fontSize: 12))),
+                    TextButton(onPressed: _isLoadingLocation ? null : _fetchLocation, child: const Text('تحديث')),
                   ],
                 ),
               ),
@@ -266,16 +209,7 @@ class _AddSupplierSheetState extends State<AddSupplierSheet> {
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
-                child: _isSubmitting
-                    ? const SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
-                      )
-                    : const Text(
-                        'إضافة المحل إلى دليل الموردين',
-                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
+                child: _isSubmitting ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2)) : const Text('إضافة المحل إلى دليل الموردين', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
               ),
               const SizedBox(height: 20),
             ],

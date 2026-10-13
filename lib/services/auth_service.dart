@@ -29,7 +29,7 @@ class AuthService {
     return null;
   }
 
-  /// تسجيل حساب صنايعي / مهني جديد في ثوانٍ مع الموافقة عليه
+  /// تسجيل حساب مغامر / مهني جديد في ثوانٍ مع الموافقة عليه
   Future<UserModel> registerCraftsman({required String name, required String phone, required String profession, required int age, required String password, GeoPoint? location}) async {
     final existing = await _usersCollection.where('phone', isEqualTo: phone.trim()).limit(1).get();
 
@@ -55,28 +55,6 @@ class AuthService {
     await LocalStorageService.saveUserSession(userId: newUser.id, role: newUser.role, phone: newUser.phone, name: newUser.name);
 
     return newUser;
-  }
-
-  /// زرع حساب مسؤول تجريبي افتراضي في حال لم يكن موجوداً
-  Future<void> seedAdminAccountIfMissing() async {
-    try {
-      final check = await _usersCollection.where('phone', isEqualTo: '0500000000').limit(1).get();
-      if (check.docs.isEmpty) {
-        final docRef = _usersCollection.doc('admin_master_1');
-        final admin = UserModel(
-          id: docRef.id,
-          name: 'مدير النظام',
-          phone: '0500000000',
-          password: 'admin',
-          age: 35,
-          role: UserRole.admin,
-          profession: 'إدارة',
-          description: 'مسؤول مراجعة واعتماد الطلبات والتسعير',
-          createdAt: DateTime.now(),
-        );
-        await docRef.set(admin.toMap());
-      }
-    } catch (_) {}
   }
 
   /// تسجيل خروج

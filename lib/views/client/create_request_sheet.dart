@@ -4,6 +4,7 @@ import '../../models/category_model.dart';
 import '../../models/service_request_model.dart';
 import '../../models/user_model.dart';
 import '../../core/services/location_service.dart';
+import '../../core/utils/currency_helper.dart';
 import '../../services/request_service.dart';
 
 class CreateRequestSheet extends StatefulWidget {
@@ -27,6 +28,7 @@ class _CreateRequestSheetState extends State<CreateRequestSheet> {
   final _budgetController = TextEditingController();
 
   String _selectedCategory = ServiceCategory.defaultCategories.first.name;
+  late CountryCurrencyInfo _selectedCountry;
   GeoPoint? _currentLocation;
   bool _isLoadingLocation = false;
   bool _isSubmitting = false;
@@ -35,6 +37,10 @@ class _CreateRequestSheetState extends State<CreateRequestSheet> {
   void initState() {
     super.initState();
     _currentLocation = widget.currentUser.location;
+    _selectedCountry = CurrencyHelper.detectCountry(
+      location: _currentLocation,
+      phone: widget.currentUser.phone,
+    );
     if (_currentLocation == null) {
       _fetchLocation();
     }
@@ -46,6 +52,10 @@ class _CreateRequestSheetState extends State<CreateRequestSheet> {
     if (mounted) {
       setState(() {
         _currentLocation = loc;
+        _selectedCountry = CurrencyHelper.detectCountry(
+          location: loc,
+          phone: widget.currentUser.phone,
+        );
         _isLoadingLocation = false;
       });
     }
@@ -69,6 +79,8 @@ class _CreateRequestSheetState extends State<CreateRequestSheet> {
         title: _titleController.text.trim(),
         description: _descriptionController.text.trim(),
         suggestedBudget: budget,
+        currency: _selectedCountry.currency,
+        country: _selectedCountry.name,
         status: RequestStatus.pendingAdmin,
         createdAt: DateTime.now(),
       );
@@ -187,13 +199,35 @@ class _CreateRequestSheetState extends State<CreateRequestSheet> {
               ),
               const SizedBox(height: 16),
 
+              // دولة وعملة الخدمة
+              const Text('دولة وعملة الخدمة المحلية:', style: TextStyle(fontWeight: FontWeight.w600)),
+              const SizedBox(height: 8),
+              DropdownButtonFormField<CountryCurrencyInfo>(
+                initialValue: _selectedCountry,
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.public, color: Colors.blue),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                ),
+                items: CurrencyHelper.supportedCountries.map((c) {
+                  return DropdownMenuItem(
+                    value: c,
+                    child: Text('${c.flag} ${c.name} (${c.currency} - ${c.currencyName})'),
+                  );
+                }).toList(),
+                onChanged: (val) {
+                  if (val != null) setState(() => _selectedCountry = val);
+                },
+              ),
+              const SizedBox(height: 16),
+
               // الميزانية المقترحة
               TextFormField(
                 controller: _budgetController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   labelText: 'السعر المقترح من طرفك (اختياري)',
-                  suffixText: 'ريال / جنيه',
+                  suffixText: _selectedCountry.currency,
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                 ),
               ),

@@ -4,16 +4,13 @@ import '../../models/supplier_model.dart';
 import '../../services/supplier_service.dart';
 import '../../core/services/location_service.dart';
 import '../../core/utils/external_launcher.dart';
+import '../widgets/ads/app_ad_banner.dart';
 
 class SuppliersView extends StatefulWidget {
   final GeoPoint? userLocation;
   final VoidCallback onAddSupplierPressed;
 
-  const SuppliersView({
-    super.key,
-    this.userLocation,
-    required this.onAddSupplierPressed,
-  });
+  const SuppliersView({super.key, this.userLocation, required this.onAddSupplierPressed});
 
   @override
   State<SuppliersView> createState() => _SuppliersViewState();
@@ -42,19 +39,9 @@ class _SuppliersViewState extends State<SuppliersView> {
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.orange.shade800, Colors.amber.shade900],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              gradient: LinearGradient(colors: [Colors.orange.shade800, Colors.amber.shade900], begin: Alignment.topLeft, end: Alignment.bottomRight),
               borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.orange.shade900.withValues(alpha: 0.25),
-                  blurRadius: 8,
-                  offset: const Offset(0, 3),
-                ),
-              ],
+              boxShadow: [BoxShadow(color: Colors.orange.shade900.withValues(alpha: 0.25), blurRadius: 8, offset: const Offset(0, 3))],
             ),
             child: Row(
               children: [
@@ -65,18 +52,11 @@ class _SuppliersViewState extends State<SuppliersView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'دليل المون ومحلات البناء في منطقتك',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
+                        'دليل المون والمحلات ومراكز التكنولوجيا في منطقتك',
+                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
                       ),
                       const SizedBox(height: 4),
-                      Text(
-                        'أكثر من 200 محل ومورد (رمل وأسمنت، حدايد وبويات، سباكة، وكهرباء) لخدمة الفنيين وأصحاب المشاريع فوراً.',
-                        style: TextStyle(color: Colors.orange.shade100, fontSize: 12, height: 1.3),
-                      ),
+                      Text('أكثر من 1,000 محل ومورد ومركز تكنولوجيا (رمل وأسمنت، حدايد وبويات، سباكة، كهرباء، كمبيوتر، ومكتبات رسم) لخدمة الفنيين وأصحاب المشاريع والمستقلين.', style: TextStyle(color: Colors.orange.shade100, fontSize: 12, height: 1.3)),
                     ],
                   ),
                 ),
@@ -131,12 +111,7 @@ class _SuppliersViewState extends State<SuppliersView> {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  _buildCategoryFilterChip('الكل'),
-                  ...SupplierModel.categories.map((c) => _buildCategoryFilterChip(c)),
-                ],
-              ),
+              child: Row(children: [_buildCategoryFilterChip('الكل'), ...SupplierModel.categories.map((c) => _buildCategoryFilterChip(c))]),
             ),
           ),
         ),
@@ -145,10 +120,7 @@ class _SuppliersViewState extends State<SuppliersView> {
 
         // 4. قائمة المحلات
         StreamBuilder<List<SupplierModel>>(
-          stream: _supplierService.streamSuppliers(
-            category: _selectedCategory,
-            searchQuery: _searchQuery,
-          ),
+          stream: _supplierService.streamSuppliers(category: _selectedCategory, searchQuery: _searchQuery),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const SliverToBoxAdapter(
@@ -170,21 +142,13 @@ class _SuppliersViewState extends State<SuppliersView> {
                     children: [
                       Icon(Icons.store_mall_directory_outlined, size: 55, color: Colors.grey.shade400),
                       const SizedBox(height: 12),
-                      Text(
-                        _searchQuery.isNotEmpty
-                            ? 'لا توجد نتائج تطابق بحثك "$_searchQuery".'
-                            : 'لا توجد محلات مسجلة في هذا القسم حالياً.',
-                        style: const TextStyle(fontSize: 14, color: Colors.grey),
-                      ),
+                      Text(_searchQuery.isNotEmpty ? 'لا توجد نتائج تطابق بحثك "$_searchQuery".' : 'لا توجد محلات مسجلة في هذا القسم حالياً.', style: const TextStyle(fontSize: 14, color: Colors.grey)),
                       const SizedBox(height: 10),
                       ElevatedButton.icon(
                         onPressed: widget.onAddSupplierPressed,
                         icon: const Icon(Icons.add, size: 18),
                         label: const Text('أضف أول محل هنا'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue.shade900,
-                          foregroundColor: Colors.white,
-                        ),
+                        style: ElevatedButton.styleFrom(backgroundColor: Colors.blue.shade900, foregroundColor: Colors.white),
                       ),
                     ],
                   ),
@@ -198,23 +162,15 @@ class _SuppliersViewState extends State<SuppliersView> {
               String formattedDistance = 'في منطقتك';
 
               if (widget.userLocation != null && s.location != null) {
-                distanceKm = LocationService.calculateDistanceInKm(
-                  widget.userLocation!,
-                  s.location!,
-                );
+                distanceKm = LocationService.calculateDistanceInKm(widget.userLocation!, s.location!);
                 formattedDistance = LocationService.formatDistance(distanceKm);
               }
 
-              return {
-                'supplier': s,
-                'distanceKm': distanceKm,
-                'formattedDistance': formattedDistance,
-              };
+              return {'supplier': s, 'distanceKm': distanceKm, 'formattedDistance': formattedDistance};
             }).toList();
 
             if (widget.userLocation != null) {
-              sortedList.sort((a, b) =>
-                  (a['distanceKm'] as double).compareTo(b['distanceKm'] as double));
+              sortedList.sort((a, b) => (a['distanceKm'] as double).compareTo(b['distanceKm'] as double));
             }
 
             return SliverMainAxisGroup(
@@ -224,26 +180,29 @@ class _SuppliersViewState extends State<SuppliersView> {
                     padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 4),
                     child: Text(
                       'تم العثور على ${sortedList.length} محل ومورد قريب:',
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey.shade700,
-                      ),
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.grey.shade700),
                     ),
                   ),
                 ),
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        final item = sortedList[index];
-                        final SupplierModel supplier = item['supplier'];
-                        final String distance = item['formattedDistance'];
-                        return _buildSupplierCard(supplier, distance);
-                      },
-                      childCount: sortedList.length,
-                    ),
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      final item = sortedList[index];
+                      final SupplierModel supplier = item['supplier'];
+                      final String distance = item['formattedDistance'];
+                      final bool showAdAfterThis = (index > 0 && index % 6 == 0);
+                      if (showAdAfterThis) {
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _buildSupplierCard(supplier, distance),
+                            const AppAdBanner(placement: AdPlacement.feedInline),
+                          ],
+                        );
+                      }
+                      return _buildSupplierCard(supplier, distance);
+                    }, childCount: sortedList.length),
                   ),
                 ),
               ],
@@ -263,18 +222,12 @@ class _SuppliersViewState extends State<SuppliersView> {
       child: FilterChip(
         selected: isSelected,
         label: Text(category),
-        labelStyle: TextStyle(
-          color: isSelected ? Colors.white : Colors.black87,
-          fontSize: 12,
-          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-        ),
+        labelStyle: TextStyle(color: isSelected ? Colors.white : Colors.black87, fontSize: 12, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal),
         selectedColor: Colors.orange.shade800,
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
-          side: BorderSide(
-            color: isSelected ? Colors.transparent : Colors.grey.shade300,
-          ),
+          side: BorderSide(color: isSelected ? Colors.transparent : Colors.grey.shade300),
         ),
         onSelected: (val) {
           setState(() => _selectedCategory = category);
@@ -300,10 +253,7 @@ class _SuppliersViewState extends State<SuppliersView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: Text(
-                    supplier.name,
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
+                  child: Text(supplier.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -314,28 +264,17 @@ class _SuppliersViewState extends State<SuppliersView> {
                   ),
                   child: Text(
                     supplier.category,
-                    style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.orange.shade900,
-                    ),
+                    style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.orange.shade900),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 6),
 
-            if (supplier.ownerName.isNotEmpty)
-              Text(
-                'المسؤول: ${supplier.ownerName}',
-                style: TextStyle(fontSize: 12, color: Colors.grey.shade700),
-              ),
+            if (supplier.ownerName.isNotEmpty) Text('المسؤول: ${supplier.ownerName}', style: TextStyle(fontSize: 12, color: Colors.grey.shade700)),
 
             const SizedBox(height: 6),
-            Text(
-              supplier.description,
-              style: TextStyle(fontSize: 13, color: Colors.grey.shade800, height: 1.3),
-            ),
+            Text(supplier.description, style: TextStyle(fontSize: 13, color: Colors.grey.shade800, height: 1.3)),
             const SizedBox(height: 10),
 
             Row(
@@ -343,17 +282,11 @@ class _SuppliersViewState extends State<SuppliersView> {
                 const Icon(Icons.location_on, size: 16, color: Colors.redAccent),
                 const SizedBox(width: 4),
                 Expanded(
-                  child: Text(
-                    supplier.addressTitle.isNotEmpty ? supplier.addressTitle : 'المنطقة القريبة',
-                    style: const TextStyle(fontSize: 12, color: Colors.black87),
-                  ),
+                  child: Text(supplier.addressTitle.isNotEmpty ? supplier.addressTitle : 'المنطقة القريبة', style: const TextStyle(fontSize: 12, color: Colors.black87)),
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                  decoration: BoxDecoration(
-                    color: Colors.blue.shade50,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
+                  decoration: BoxDecoration(color: Colors.blue.shade50, borderRadius: BorderRadius.circular(6)),
                   child: Text(
                     distance,
                     style: TextStyle(fontSize: 11, color: Colors.blue.shade900, fontWeight: FontWeight.bold),
@@ -398,10 +331,7 @@ class _SuppliersViewState extends State<SuppliersView> {
                   Expanded(
                     child: OutlinedButton.icon(
                       onPressed: () {
-                        ExternalLauncher.openGoogleMaps(
-                          latitude: supplier.location!.latitude,
-                          longitude: supplier.location!.longitude,
-                        );
+                        ExternalLauncher.openGoogleMaps(latitude: supplier.location!.latitude, longitude: supplier.location!.longitude);
                       },
                       icon: const Icon(Icons.directions, size: 18),
                       label: const Text('الموقع بالخريطة'),
