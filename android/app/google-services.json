@@ -1,13 +1,14 @@
 {
   "project_info": {
     "project_number": "606713442405",
+    "firebase_url": "https://snaa-d2d53-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "snaa-d2d53",
     "storage_bucket": "snaa-d2d53.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:606713442405:android:0e388cc489b9b9d11d168c",
+        "mobilesdk_app_id": "1:606713442405:android:717cffe0bad7a87c1d168c",
         "android_client_info": {
           "package_name": "com.Guild.Maghamir"
         }

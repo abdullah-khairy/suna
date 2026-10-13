@@ -39,34 +39,50 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyBbZAoEssqppa8Jpy75N5rdVNhrO6S8RsU',
-    appId: '1:606713442405:web:dfd882f2bfda0b6b1d168c',
+    appId: '1:606713442405:web:cb11ea922e0347431d168c',
     messagingSenderId: '606713442405',
     projectId: 'snaa-d2d53',
     authDomain: 'snaa-d2d53.firebaseapp.com',
+    databaseURL: 'https://snaa-d2d53-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'snaa-d2d53.firebasestorage.app',
-    measurementId: 'G-2KTKR0BX3R',
+    measurementId: 'G-CKTK4S64QZ',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(apiKey: 'AIzaSyBgPZCxG-8ZRV1mNjGCQUwtL5-g_SVCt-s', appId: '1:606713442405:android:0e388cc489b9b9d11d168c', messagingSenderId: '606713442405', projectId: 'snaa-d2d53', storageBucket: 'snaa-d2d53.firebasestorage.app');
-
-  static const FirebaseOptions ios = FirebaseOptions(apiKey: 'AIzaSyAdZQKp1WA3YRTjKOebuvpgnFGkf0GP-4c', appId: '1:606713442405:ios:82274ff91a3fe7d01d168c', messagingSenderId: '606713442405', projectId: 'snaa-d2d53', storageBucket: 'snaa-d2d53.firebasestorage.app', iosBundleId: 'com.Guild.Maghamir');
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAdZQKp1WA3YRTjKOebuvpgnFGkf0GP-4c',
-    appId: '1:606713442405:ios:82274ff91a3fe7d01d168c',
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyBgPZCxG-8ZRV1mNjGCQUwtL5-g_SVCt-s',
+    appId: '1:606713442405:android:717cffe0bad7a87c1d168c',
     messagingSenderId: '606713442405',
     projectId: 'snaa-d2d53',
+    databaseURL: 'https://snaa-d2d53-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'snaa-d2d53.firebasestorage.app',
+  );
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyAdZQKp1WA3YRTjKOebuvpgnFGkf0GP-4c',
+    appId: '1:606713442405:ios:ea5c8ebbaa5db0781d168c',
+    messagingSenderId: '606713442405',
+    projectId: 'snaa-d2d53',
+    databaseURL: 'https://snaa-d2d53-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'snaa-d2d53.firebasestorage.app',
+    iosBundleId: 'com.Guild.Maghamir',
+  );
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyAdZQKp1WA3YRTjKOebuvpgnFGkf0GP-4c',
+    appId: '1:606713442405:ios:ea5c8ebbaa5db0781d168c',
+    messagingSenderId: '606713442405',
+    projectId: 'snaa-d2d53',
+    databaseURL: 'https://snaa-d2d53-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'snaa-d2d53.firebasestorage.app',
     iosBundleId: 'com.Guild.Maghamir',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
     apiKey: 'AIzaSyBbZAoEssqppa8Jpy75N5rdVNhrO6S8RsU',
-    appId: '1:606713442405:web:027738fd1603ee921d168c',
+    appId: '1:606713442405:web:5487d90d342e7ead1d168c',
     messagingSenderId: '606713442405',
     projectId: 'snaa-d2d53',
     authDomain: 'snaa-d2d53.firebaseapp.com',
+    databaseURL: 'https://snaa-d2d53-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'snaa-d2d53.firebasestorage.app',
-    measurementId: 'G-KBKWTCYX6R',
+    measurementId: 'G-2LS1K7PHQ2',
   );
 }

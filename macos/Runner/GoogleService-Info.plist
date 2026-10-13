@@ -25,6 +25,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:606713442405:ios:82274ff91a3fe7d01d168c</string>
+	<string>1:606713442405:ios:ea5c8ebbaa5db0781d168c</string>
+	<key>DATABASE_URL</key>
+	<string>https://snaa-d2d53-default-rtdb.europe-west1.firebasedatabase.app</string>
 </dict>
 </plist>
